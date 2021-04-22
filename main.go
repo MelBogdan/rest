@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/MelBogdan/rest/app"
+	"github.com/MelBogdan/rest/controllers"
 
 	"github.com/gorilla/mux"
 )
@@ -17,8 +18,12 @@ func main() {
 
 	port := os.Getenv("PORT") //Получить порт из файла .env; мы не указали порт, поэтому при локальном тестировании должна возвращаться пустая строка
 	if port == "" {
-		port = "8000" //localhost
+		port = "8080" //localhost
 	}
+
+	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
+
+	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
 
 	fmt.Println(port)
 
